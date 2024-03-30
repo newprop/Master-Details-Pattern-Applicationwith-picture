@@ -1,0 +1,115 @@
+﻿@model WebApplication2.Models.Students
+@inject StudentContext db
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Students</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address" class="control-label"></label>
+                <textarea asp-for="Address" class="form-control"></textarea>
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContactNo" class="control-label"></label>
+                <input asp-for="ContactNo" class="form-control" />
+                <span asp-validation-for="ContactNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImageUpload" class="control-label"></label>
+                <input asp-for="ImageUpload" class="form-control" type="file" />
+                <span asp-validation-for="ImageUpload" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Class" class="control-label"></label>
+                <input asp-for="Class" class="form-control" />
+                <span asp-validation-for="Class" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Regular" /> @Html.DisplayNameFor(model => model.Regular)
+                </label>
+            </div>
+           
+
+            <br />
+            <table class="table table-responsive table-hover table-bordered table-striped">
+
+                <thead>
+                    <tr>
+                        <th>
+                            Subject Name
+                        </th>
+                        <th>
+                            ObtainedNumber
+                        </th>
+                        <th>
+                            StartDate
+                        </th>
+                        <th>
+                            <input type="submit" value="Add" name="command" class="btn btn-success " />
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @for (int i = 0; i < Model.StudentMarks.Count; i++)
+                    {
+                        <tr>
+                            <td>
+                                <select asp-for="StudentMarks[i].SubjectId" asp-items="db.Subjectlists.Select(p=> new SelectListItem(){Text = p.SubjectName,Value = p.SubjectId.ToString() })">
+                                </select> *
+                            </td>
+
+                        
+                            <td>
+                                <input asp-for="StudentMarks[i].ObtainedNumber" class="form-control" />
+                            </td>
+                            <td>
+                                <input asp-for="StudentMarks[i].StartDate" class="form-control"  />
+                            </td>
+                            <td>
+                                <button value="delete-@i" name="command">Delete</button>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+
+
+            </table>
+    
+           @*  <div class="form-group">
+                <label asp-for="ImageUpload" class="control-label"></label>
+                <input asp-for="ImageUpload" class="form-control" type="file" />
+                <span asp-validation-for="ImageUpload" class="text-danger"></span>
+            </div> *@
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,48 @@
+﻿@model List<StudentExamMarks>
+
+<table class="table table-responsive table-hover table-bordered table-striped">
+
+	<thead>
+		<tr>
+			<th>
+				Subject Name
+			</th>
+			<th>
+				ObtainedNumber
+			</th>
+			<th>
+				StartDate
+			</th>
+			
+		</tr>
+	</thead>
+
+	<tbody>
+
+		@foreach (var mark in Model)
+		{
+			<tr>
+				<td>
+					@mark.Subject?.SubjectName
+				</td>
+			
+				<td>
+					<input asp-for="@mark.ObtainedNumber" class="form-control" readonly />
+				</td>
+				<td>
+					<input asp-for="@mark.StartDate" class="form-control" readonly />
+				</td>
+			</tr>
+		}
+
+	</tbody>
+	<tfoot>
+		<tr>
+			<td colspan="4">
+				ObtainedTotal  = @ViewBag.ObtainedTotal and No of Item is @ViewBag.Count
+
+			</td>
+		</tr>
+	</tfoot>
+
+</table>
